@@ -3,10 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Home from "./screens/Home";
 import LogIn from "./screens/LogIn";
 import SignUp from "./screens/SignUp";
-import Menu from "./screens/Menu"; 
-import WhitePage from "./screens/WhitePage";
 import SearchListing from './screens/SearchListing';
 import DetailProductNew from './screens/DetailProductNew';
+import About from './screens/About';
 import { LocationProvider } from "./functions/LocationContext";
 
 const App = () => {
@@ -47,16 +46,13 @@ const App = () => {
             
           }
         />
-        {/* Menu Route */}
-        <Route path="/Menu" element={<Menu />} />
 
-        {/* WhitePage Route */}
-        <Route path="/whitepage" element={<WhitePage/>} />
 
         {/* Default Route */}
         <Route path="*" element={<Navigate to="/LogIn" replace />} />
 
         <Route path="/search-listing" element={<SearchListing />} />
+        <Route path="/About" element={<About />} />
 
         <Route path="/detail-product" element={<DetailProductNew />} />
         

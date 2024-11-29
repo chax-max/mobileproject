@@ -1,8 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { FaHandsHelping, FaSearch, FaHome, FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
+import { FaHandsHelping, FaSearch, FaHome} from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 import imageMapping from "./imageMappings";
 
@@ -10,7 +12,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleSearchListingPress = () => navigate("/search-listing");
-  const handleMenuPress = () => navigate("/Menu");
+  
 
   // Select specific house images for the slideshow
   const houseImages = [
@@ -21,6 +23,7 @@ const Home = () => {
 
   return (
     <div style={{ backgroundColor: "#f9f9f9", fontFamily: "Arial, sans-serif" }}>
+      <Navbar/>
       {/* Welcome Section */}
       <div style={styles.welcomeContainer}>
         <h1 style={styles.title}>Welcome to Safe Shelter</h1>
@@ -33,13 +36,6 @@ const Home = () => {
       <div style={styles.navBarContainer}>
         <button style={styles.button} onClick={handleSearchListingPress}>
           <p style={styles.buttonText}>Find Your Next Property 🚪</p>
-        </button>
-        <button style={styles.iconButton} onClick={handleMenuPress}>
-          <img
-            style={styles.iconImage}
-            src={require("../assets/logo4.png")}
-            alt="Menu"
-          />
         </button>
       </div>
 
@@ -88,23 +84,7 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Footer Section */}
-      <div style={styles.footerContainer}>
-        <h2 style={styles.footerTitle}>Safe Shelter</h2>
-        <div style={styles.footerLinks}>
-          <p style={styles.footerLink}>About Us</p>
-          <p style={styles.footerLink}>Contact</p>
-          <p style={styles.footerLink}>Privacy Policy</p>
-        </div>
-        <div style={styles.footerIcons}>
-          <FaFacebook size={24} color="#3b5998" />
-          <FaTwitter size={24} color="#1da1f2" />
-          <FaInstagram size={24} color="#e1306c" />
-        </div>
-        <p style={styles.footerCopyright}>
-          © 2024 Safe Shelter. All rights reserved.
-        </p>
-      </div>
+      <Footer/>
     </div>
   );
 };
@@ -112,7 +92,7 @@ const Home = () => {
 // Styles with responsiveness
 const styles = {
   welcomeContainer: {
-    padding: "20px",
+    padding: "100px 20px 20px",
     textAlign: "center",
     background: "linear-gradient(45deg, #4facfe, #00f2fe)",
     borderBottomLeftRadius: "30px",
@@ -130,7 +110,7 @@ const styles = {
   },
   navBarContainer: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
     padding: "20px",
   },
@@ -211,7 +191,7 @@ const styles = {
     borderRadius: "10px",
     boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
     width: "100%",
-    maxWidth: "300px",
+    maxWidth: "90%",
   },
   serviceText: {
     fontSize: "18px",
@@ -222,39 +202,6 @@ const styles = {
     fontSize: "14px",
     color: "#666",
     marginTop: "5px",
-  },
-  footerContainer: {
-    marginTop: "20px",
-    padding: "20px",
-    backgroundColor: "#4facfe",
-    textAlign: "center",
-  },
-  footerTitle: {
-    fontSize: "20px",
-    fontWeight: "bold",
-    color: "#ffffff",
-    marginBottom: "10px",
-  },
-  footerLinks: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "15px",
-    marginBottom: "10px",
-  },
-  footerLink: {
-    fontSize: "14px",
-    color: "#ffffff",
-    cursor: "pointer",
-  },
-  footerIcons: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "15px",
-    marginBottom: "10px",
-  },
-  footerCopyright: {
-    fontSize: "12px",
-    color: "#ffffff",
   },
 };
 

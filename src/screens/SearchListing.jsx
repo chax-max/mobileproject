@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import propertiesData from "../info.json";
 import imageMapping from "./imageMappings";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 import { useLocationContext } from "../functions/LocationContext";
+
 
 
 const SearchListing = () => {
@@ -10,8 +13,6 @@ const SearchListing = () => {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [searchText, setSearchText] = useState("");
     const navigate = useNavigate();
-
-    const handlePress = () => { navigate('/Menu'); };
 
     //Function to get the location between the user's current location and each property :
     const toRadians = (degrees) => {
@@ -70,6 +71,7 @@ const SearchListing = () => {
 
         return (
             <div style={{ display: "flex", flexWrap: "wrap", gap: "30px", justifyContent: "center", padding: "30px" }}>
+                <Navbar/>
                 {sortedProperties.map(property => (
                     <div
                         key={property.name}
@@ -160,7 +162,7 @@ const SearchListing = () => {
     }; 
 
     return (
-        <div style={{ flexGrow: 1, backgroundColor: "#f7f9fc", paddingBottom: "30px", fontFamily: "'Raleway', sans-serif" }}>
+        <div style={{ flexGrow: 1, backgroundColor: "#f7f9fc", paddingBottom: "0px", fontFamily: "'Raleway', sans-serif",marginTop: "100px"  }}>
             {/* Location and location changer */}
             <div style={{ marginBottom: "20px", textAlign: "center" }}>
                 <span style={{ fontSize: "14px", color: "#555", marginRight: "10px" }}>Location:</span>
@@ -182,6 +184,7 @@ const SearchListing = () => {
                 display: "flex",
                 justifyContent: "center",
                 marginBottom: "20px",
+                marginTop: "50px",
             }}>
                 <input
                     style={{
@@ -197,25 +200,6 @@ const SearchListing = () => {
                     value={searchText}
                     onChange={e => setSearchText(e.target.value)}
                 />
-                <div
-                    style={{
-                        padding: "12px 20px",
-                        backgroundColor: "#0A8ED9",
-                        borderRadius: "50%",
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        cursor: "pointer",
-                        boxShadow: "0 5px 10px rgba(0, 0, 0, 0.1)",
-                    }}
-                    onClick={handlePress}
-                >
-                    <img
-                        src={require("../assets/logo4.png")}
-                        alt="Menu"
-                        style={{ height: "25px", width: "25px", filter: "invert(1)" }}
-                    />
-                </div>
             </div>
 
             {/* Category Types Buttons */}
@@ -321,6 +305,7 @@ const SearchListing = () => {
                     </div>
                 </div>
             )}
+            <Footer />
         </div>
     );
 };
