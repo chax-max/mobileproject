@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import imageMapping from "./imageMappings";
 //import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 const googleApiKey = process.env.REACT_APP_GOOGLE_API;
 
@@ -24,32 +24,12 @@ const DetailProductNew = () => {
     email,
   } = location.state || {};
 
-  console.log(propertyLocation);
-
-  const [map, setMap] = useState(null);
   const defaultLocation = { lat: 0, lng: 0};
   const mapCenter = propertyLocation.latitude && propertyLocation.longitude ?  {lat: propertyLocation.latitude, lng :propertyLocation.longitude } : defaultLocation;
 
   const [modalVisible, setModalVisible] = useState(false);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 
-  useEffect(() => {
-    if(map && window.google?.maps.marker?.AdvancedMarkerElement) {
-      const markerDiv = document.createElement("div");
-      markerDiv.innerHTML = `
-        <div style="background-color: #007bff; padding: 10px; color: white; border-radius: 5px;">
-          <b>${propertyName || "Property Marker"}</b>
-        </div>
-      `;
-
-      new window.google.maps.marker.AdvancedMarkerElement({
-        position: mapCenter,
-        map: map,
-        title: propertyName,
-        content: document.createElement("div"),
-      });
-    };
-  },[map, mapCenter]);
 
   let slicedDescription;
   if (description.length > 100) {
@@ -205,9 +185,8 @@ const DetailProductNew = () => {
             mapContainerStyle={styles.mapStyle}
             center={mapCenter}
             zoom={15}
-            mapId="b935bc4a4eba0c3d"
-            onLoad={(mapInstance) => setMap(mapInstance)}
           >
+            <Marker position={mapCenter} />
           </GoogleMap>
         </LoadScript>
       </div>
