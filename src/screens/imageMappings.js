@@ -7,6 +7,7 @@ const imageMapping = {
     "../assets/ic-phone.png": require("../assets/ic-phone.png"),
     "../assets/ic-bookmark.png": require("../assets/ic-bookmark.png"),
     "../assets/logo12.png": require("../assets/logo12.png"),
+    "../assets/logo16.png" : require("../assets/logo16.png"),
     "../assets/face1.png": require("../assets/face1.png"),
     "../assets/face2.png": require("../assets/face2.png"),
     "../assets/face3.png": require("../assets/face3.png"),

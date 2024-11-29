@@ -7,6 +7,7 @@ import Menu from "./screens/Menu";
 import WhitePage from "./screens/WhitePage";
 import SearchListing from './screens/SearchListing';
 import DetailProductNew from './screens/DetailProductNew';
+import { LocationProvider } from "./functions/LocationContext";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false); 
@@ -21,6 +22,7 @@ const App = () => {
   }, []);
 
   return (
+    <LocationProvider>
     <Router>
       <Routes>
         {/* LogIn Route */}
@@ -60,6 +62,7 @@ const App = () => {
         
       </Routes>
     </Router>
+    </LocationProvider>
   );
 };
 

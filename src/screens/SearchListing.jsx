@@ -2,19 +2,43 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import propertiesData from "../info.json";
 import imageMapping from "./imageMappings";
+import { useLocationContext } from "../functions/LocationContext";
 
-const locations = ["Jakarta", "Bali", "Surabaya", "Antelias"];
 
 const SearchListing = () => {
+    const { latitude, longitude, locationName } = useLocationContext();
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [searchText, setSearchText] = useState("");
-    const [currentLocationIndex, setCurrentLocationIndex] = useState(0);
     const navigate = useNavigate();
 
-    const handlePress = () => {
-        navigate('/Menu');
-    };
+    const handlePress = () => { navigate('/Menu'); };
 
+    //Function to get the location between the user's current location and each property :
+    const toRadians = (degrees) => {
+        return degrees * (Math.PI / 180);
+    };
+    const harvesine = (lat1, lon1, lat2, lon2) => {
+        const earthRadius = 6371;
+
+        const lat1Rad = toRadians(lat1);
+        const lon1Rad = toRadians(lon1);
+        const lat2Rad = toRadians(lat2);
+        const lon2Rad = toRadians(lon2);
+
+        const dLat = lat2Rad - lat1Rad;
+        const dLon = lon2Rad - lon1Rad;
+
+        const harvesineFormula = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(dLon/2) * Math.sin(dLon/2);
+
+        const c = 2 * Math.atan2(Math.sqrt(harvesineFormula), Math.sqrt(1 - harvesineFormula));
+
+        const distance = earthRadius * c;
+
+        return distance.toFixed(0);
+    };
+    //End function to get the location between the user's current location and each property
+
+    
     const getFilteredProperties = () => {
         return propertiesData.filter(property => {
             const matchesCategory = selectedCategory ? property.type.toLowerCase() === selectedCategory.toLowerCase() : true;
@@ -23,20 +47,19 @@ const SearchListing = () => {
         });
     };
 
-    const filterPropertiesByDistance = (location) => {
-        return propertiesData.sort((a, b) => {
-            const distanceA = a.distances[location];
-            const distanceB = b.distances[location];
+    const filterPropertiesByDistance = () => {
+        return propertiesData.sort((a,b) => {
+            const distanceA = harvesine(latitude, longitude, a.coordinates.latitude, a.coordinates.longitude);
+            const distanceB = harvesine(latitude, longitude, b.coordinates.latitude, b.coordinates.longitude);
             return distanceA - distanceB;
         });
     };
 
-    const getBestProperty = () => {
-        const filteredProperties = propertiesData.filter(property =>
-            property.location.toLowerCase().includes(locations[currentLocationIndex].toLowerCase())
-        );
-        return filteredProperties.sort((a, b) => a.price - b.price)[0];
+    const getBestProperty = (location) => {
+        const filteredPropertiesByDistance = filterPropertiesByDistance();
+        return filteredPropertiesByDistance.sort((a, b) => a.price - b.price)[0];
     };
+    const bestProperty = getBestProperty(locationName);
 
     const renderImagesByLocation = (location) => {
         let sortedProperties = getFilteredProperties();
@@ -101,7 +124,7 @@ const SearchListing = () => {
                                 fontWeight: "bold",
                                 color: "#0A8ED9",
                             }}>
-                                ${property.price}
+                                ${property.price} Per month
                             </p>
                             <p style={{
                                 margin: "5px 0",
@@ -134,13 +157,7 @@ const SearchListing = () => {
                 email: property.person.email,
             }
         });
-    };
-
-    const changeLocation = () => {
-        setCurrentLocationIndex((currentLocationIndex + 1) % locations.length);
-    };
-
-    const bestProperty = getBestProperty();
+    }; 
 
     return (
         <div style={{ flexGrow: 1, backgroundColor: "#f7f9fc", paddingBottom: "30px", fontFamily: "'Raleway', sans-serif" }}>
@@ -155,9 +172,8 @@ const SearchListing = () => {
                         cursor: "pointer",
                         textDecoration: "underline",
                     }}
-                    onClick={changeLocation}
                 >
-                    {locations[currentLocationIndex]} ▼
+                    {locationName}
                 </span>
             </div>
 
@@ -241,7 +257,7 @@ const SearchListing = () => {
                     color: "#333",
                     fontWeight: "bold",
                 }}>Properties Near You</h2>
-                {renderImagesByLocation(locations[currentLocationIndex])}
+                {renderImagesByLocation(locationName)}
             </div>
 
             {/* Best for You */}

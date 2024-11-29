@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import imageMapping from "./imageMappings";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+//import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
+
+const googleApiKey = process.env.REACT_APP_GOOGLE_API;
 
 const DetailProductNew = () => {
   const navigate = useNavigate();
@@ -21,12 +24,42 @@ const DetailProductNew = () => {
     email,
   } = location.state || {};
 
+  console.log(propertyLocation);
+
+  const [map, setMap] = useState(null);
+  const defaultLocation = { lat: 0, lng: 0};
+  const mapCenter = propertyLocation.latitude && propertyLocation.longitude ?  {lat: propertyLocation.latitude, lng :propertyLocation.longitude } : defaultLocation;
+
   const [modalVisible, setModalVisible] = useState(false);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 
+  useEffect(() => {
+    if(map && window.google?.maps.marker?.AdvancedMarkerElement) {
+      const markerDiv = document.createElement("div");
+      markerDiv.innerHTML = `
+        <div style="background-color: #007bff; padding: 10px; color: white; border-radius: 5px;">
+          <b>${propertyName || "Property Marker"}</b>
+        </div>
+      `;
+
+      new window.google.maps.marker.AdvancedMarkerElement({
+        position: mapCenter,
+        map: map,
+        title: propertyName,
+        content: document.createElement("div"),
+      });
+    };
+  },[map, mapCenter]);
+
+  let slicedDescription;
+  if (description.length > 100) {
+    slicedDescription = description.slice(0,100)+"...";
+  } else {
+    slicedDescription = description;
+  };
+
   const handlePressHome = () => navigate("/home");
-  const handleBookmarkPress = () =>
-    alert("This property has been successfully added to your bookmarks");
+  const handleBookmarkPress = () => alert("This property has been successfully added to your bookmarks");
   const handlePress = () => alert("You have successfully rented this property");
   const handlePhonePress = () => window.open(`tel:${phonenumber}`, "_self");
   const handleEmailPress = () => window.open(`mailto:${email}`, "_self");
@@ -34,7 +67,7 @@ const DetailProductNew = () => {
   const renderImage = (src, alt) => {
     return src ? (
       <img
-        src={src}
+        src={imageMapping[src]}
         alt={alt}
         style={{ width: "100%", borderRadius: "10px", objectFit: "cover", height: "400px" }}
       />
@@ -47,7 +80,7 @@ const DetailProductNew = () => {
     );
   };
 
-  return (
+  return(
     <div style={{ padding: "20px", maxWidth: "1200px", margin: "auto", fontFamily: "'Roboto', sans-serif" }}>
       {/* Render Property Main Image */}
       <div style={{ position: "relative", borderRadius: "10px", boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)" }}>
@@ -72,7 +105,7 @@ const DetailProductNew = () => {
 
         <div style={{ position: "absolute", bottom: "20px", left: "20px", color: "#fff" }}>
           <h2 style={{ fontSize: "30px", fontWeight: "bold", margin: "0" }}>{propertyName}</h2>
-          <p style={{ fontSize: "20px", margin: "5px 0" }}>{price}</p>
+          <p style={{ fontSize: "20px", margin: "5px 0" }}>$ {price} Per month</p>
         </div>
       </div>
 
@@ -100,7 +133,7 @@ const DetailProductNew = () => {
       <div style={{ marginTop: "20px" }}>
         <h3 style={styles.descriptionLabel}>Description</h3>
         <p style={{ fontSize: "16px", lineHeight: "1.6", color: "#555" }}>
-          {isDescriptionExpanded ? description : description.slice(0, 100) + "..."}
+          {isDescriptionExpanded ? description : slicedDescription}
         </p>
         {description.length > 100 && (
           <button
@@ -115,7 +148,7 @@ const DetailProductNew = () => {
       {/* Property Owner */}
       <div style={{ display: "flex", alignItems: "center", marginTop: "20px" }}>
         <img
-          src={ownerImage || "https://via.placeholder.com/50"} // Fallback for owner image
+          src={imageMapping[ownerImage] || "https://via.placeholder.com/50"} // Fallback for owner image
           alt={ownerName}
           style={styles.ownerImageStyle}
         />
@@ -149,8 +182,8 @@ const DetailProductNew = () => {
             images.slice(0, 3).map((image, index) => (
               <img
                 key={index}
-                src={image || "https://via.placeholder.com/100"} // Fallback for gallery image
-                alt={`Gallery Image ${index + 1}`}
+                src={imageMapping[image] || "https://via.placeholder.com/100"} // Fallback for gallery image
+                alt={`Gallery img ${index + 1}`}
                 style={styles.galleryImage}
               />
             ))
@@ -167,25 +200,23 @@ const DetailProductNew = () => {
 
       {/* Render Map */}
       <div style={{ marginTop: "40px", borderRadius: "10px", overflow: "hidden", boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)" }}>
-        <MapContainer
-          center={[propertyLocation?.latitude || 0, propertyLocation?.longitude || 0]}
-          zoom={13}
-          style={styles.mapStyle}
-        >
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          <Marker
-            position={[propertyLocation?.latitude || 0, propertyLocation?.longitude || 0]}
+        <LoadScript googleMapsApiKey={googleApiKey} libraries={["marker"]}>
+          <GoogleMap
+            mapContainerStyle={styles.mapStyle}
+            center={mapCenter}
+            zoom={15}
+            mapId="b935bc4a4eba0c3d"
+            onLoad={(mapInstance) => setMap(mapInstance)}
           >
-            <Popup>{propertyName}</Popup>
-          </Marker>
-        </MapContainer>
+          </GoogleMap>
+        </LoadScript>
       </div>
 
       {/* Price and Rent Button */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "30px" }}>
         <div>
           <p style={{ fontSize: "20px", fontWeight: "bold", margin: "0" }}>Price</p>
-          <p style={{ fontSize: "22px", color: "#007bff", fontWeight: "bold" }}>{price}</p>
+          <p style={{ fontSize: "22px", color: "#007bff", fontWeight: "bold" }}>$ {price} Per month</p>
         </div>
         <button onClick={handlePress} style={styles.rentButton}>Rent Now</button>
       </div>
