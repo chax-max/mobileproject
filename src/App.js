@@ -6,7 +6,9 @@ import SignUp from "./screens/SignUp";
 import SearchListing from './screens/SearchListing';
 import DetailProductNew from './screens/DetailProductNew';
 import About from './screens/About';
+import AddListing from "./screens/AddListing";
 import { LocationProvider } from "./functions/LocationContext";
+import { User } from "./functions/UserContext";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false); 
@@ -21,6 +23,7 @@ const App = () => {
   }, []);
 
   return (
+    <User>
     <LocationProvider>
     <Router>
       <Routes>
@@ -55,10 +58,12 @@ const App = () => {
         <Route path="/About" element={<About />} />
 
         <Route path="/detail-product" element={<DetailProductNew />} />
+        <Route path="/AddListing" element={<AddListing />} />
         
       </Routes>
     </Router>
     </LocationProvider>
+    </User>
   );
 };
 

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import imageMapping from "./imageMappings";
-//import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import Modal from "react-modal";
 
 const googleApiKey = process.env.REACT_APP_GOOGLE_API;
 
@@ -16,7 +16,7 @@ const DetailProductNew = () => {
     price,
     bathrooms,
     bedrooms,
-    images = [],
+    images,
     description = "",
     ownerName,
     ownerImage,
@@ -59,6 +59,23 @@ const DetailProductNew = () => {
       />
     );
   };
+
+  const RenderModal = () => {
+    return(
+      <Modal isOpen={modalVisible} onRequestClose={() => setModalVisible(false)}>
+        <div style={styles.modalContainer}>
+            {images.map((image, index) => (
+              <div key={index}>
+                {renderImage(image, index)}
+              </div>
+            ))}
+          <div style={styles.closeModalButtonContainer}>
+            <button style={styles.closeModalButton} onClick={() => setModalVisible(false)}>✖ Close</button>
+          </div>
+        </div>
+      </Modal>
+    )
+  }
 
   return(
     <div style={{ padding: "20px", maxWidth: "1200px", margin: "auto", fontFamily: "'Roboto', sans-serif" }}>
@@ -177,6 +194,7 @@ const DetailProductNew = () => {
           )}
         </div>
       </div>
+      <RenderModal />
 
       {/* Render Map */}
       <div style={{ marginTop: "40px", borderRadius: "10px", overflow: "hidden", boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)" }}>
