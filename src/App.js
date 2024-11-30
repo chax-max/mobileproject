@@ -9,6 +9,7 @@ import About from './screens/About';
 import AddListing from "./screens/AddListing";
 import { LocationProvider } from "./functions/LocationContext";
 import { User } from "./functions/UserContext";
+import Contact from "./screens/Contact";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false); 
@@ -54,11 +55,12 @@ const App = () => {
         {/* Default Route */}
         <Route path="*" element={<Navigate to="/LogIn" replace />} />
 
-        <Route path="/search-listing" element={<SearchListing />} />
+        <Route path="/SearchListing" element={<SearchListing />} />
         <Route path="/About" element={<About />} />
 
         <Route path="/detail-product" element={<DetailProductNew />} />
         <Route path="/AddListing" element={<AddListing />} />
+        <Route path="/Contact" element={<Contact />} />
         
       </Routes>
     </Router>

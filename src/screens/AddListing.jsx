@@ -1,9 +1,10 @@
 import React, { useState, useCallback, useRef } from "react";
 import { useLocationContext } from "../functions/LocationContext";
 import { useNavigate } from "react-router-dom";
-import { useUser } from "../functions/UserContext";
 import GooglePlacesAutocomplete from 'react-google-autocomplete';
 import { LoadScript, GoogleMap, Marker } from "@react-google-maps/api";
+import Navbar from "./Navbar";
+
 
 const googleApiKey = process.env.REACT_APP_GOOGLE_API;
 const libraries = ['places'];
@@ -273,6 +274,7 @@ const AddListing = () => {
                         </button>
                     </div>
                 </div>
+                <Navbar/>
             </div>
         </div>
     );
@@ -286,6 +288,7 @@ const styles = {
       padding: '20px',
       backgroundColor: '#f8f9fa',
       minHeight: '100vh',
+      marginTop:"75px",
     },
     allContainer: {
       width: '100%',

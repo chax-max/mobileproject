@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import imageMapping from './imageMappings';
 import { useNavigate } from "react-router-dom";
-import { FaHome, FaInfoCircle, FaPhone, FaPlusCircle, FaSignOutAlt } from 'react-icons/fa'; 
+import { FaHome, FaInfoCircle, FaPhone, FaPlusCircle, FaSignOutAlt, FaSearch } from 'react-icons/fa';  // Import the search icon
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -11,12 +11,14 @@ const Navbar = () => {
     const handleContact = () => navigate("/Contact");
     const handleLogOut = () => navigate("/LogIn");
     const handleAddListing = () => navigate("/AddListing");
+    const handleSearchListing = () => navigate("/SearchListing");  
 
     return (
         <div style={navbarStyles.container}>
             <Link to="/home" style={navbarStyles.logoLink} onClick={handleHome}>
                 <img src={imageMapping["../assets/main-logo.png"]} alt="Logo" style={navbarStyles.logo} />
             </Link>
+            {/* Centered links */}
             <div style={navbarStyles.navItems}>
                 <Link to="/home" style={navbarStyles.link} onClick={handleHome}>
                     <FaHome style={navbarStyles.icon} /> Home
@@ -30,10 +32,14 @@ const Navbar = () => {
                 <Link to="/AddListing" style={navbarStyles.link} onClick={handleAddListing}>
                     <FaPlusCircle style={navbarStyles.icon} /> Add Listing
                 </Link>
-                <Link to="/LogOut" style={navbarStyles.link} onClick={handleLogOut}>
-                    <FaSignOutAlt style={navbarStyles.icon} /> LogOut
+                <Link to="/SearchListing" style={navbarStyles.link} onClick={handleSearchListing}>  
+                    <FaSearch style={navbarStyles.icon} /> Search Listings
                 </Link>
             </div>
+            {/* Left-aligned LogOut link */}
+            <Link to="/LogOut" style={navbarStyles.logoutLink} onClick={handleLogOut}>
+                <FaSignOutAlt style={navbarStyles.icon} /> LogOut
+            </Link>
         </div>
     );
 };
@@ -65,8 +71,10 @@ const navbarStyles = {
   },
   navItems: {
     display: 'flex',
+    justifyContent: 'center',
     gap: '30px',
     alignItems: 'center',
+    flex: 1, 
   },
   link: {
     fontSize: '18px',
@@ -81,6 +89,16 @@ const navbarStyles = {
   icon: {
     fontSize: '20px',
     transition: 'transform 0.3s',  
+  },
+  logoutLink: {
+    fontSize: '18px',
+    color: '#333',
+    textDecoration: 'none',
+    fontWeight: '700',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    transition: 'color 0.3s, transform 0.3s',  
   },
   '@media (max-width: 768px)': {
     container: {
@@ -98,6 +116,9 @@ const navbarStyles = {
     link: {
       fontSize: '16px',  
     },
+    logoutLink: {
+      marginTop: '20px',
+    },
   },
   '@media (max-width: 480px)': {
     container: {
@@ -111,7 +132,6 @@ const navbarStyles = {
     },
   },
 };
-
 
 navbarStyles.link[':hover'] = {
     color: '#0A8ED9',  
