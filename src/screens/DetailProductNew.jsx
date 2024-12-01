@@ -12,12 +12,11 @@ const DetailProductNew = () => {
   const {
     location: propertyLocation,
     propertyName,
-    propertyImage,
     price,
     bathrooms,
     bedrooms,
     images,
-    description = "",
+    description,
     ownerName,
     ownerImage,
     phonenumber,

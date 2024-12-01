@@ -23,16 +23,16 @@ const AddListing = () => {
     const typeRef = useRef(null);
 
     const [apartment, setApartment] = useState({
-        location: "", //Location Selecter Done
-        name: "", //Input Fields Done
-        photo_url: "", //Input Fields //Done// Image Selector
-        price: "", //Input Fields Done
-        type: "", //Input Fields //Done// TypeSelection
-        bathroom: "", //Input Fields Done
-        bedroom: "", //Input Fields Done
-        images: [], //Input Fields //Done// Image Selector
+        location: null, //Location Selecter Done
+        name: null, //Input Fields Done
+        photo_url: null, //Input Fields //Done// Image Selector
+        price: null, //Input Fields Done
+        type: null, //Input Fields //Done// TypeSelection
+        bathroom: null, //Input Fields Done
+        bedroom: null, //Input Fields Done
+        images: null, //Input Fields //Done// Image Selector
         distances: {},
-        description: "", //Input Fields Done
+        description: null, //Input Fields Done
         person: {
             name: user.name,
             image_url: user.avatar,
@@ -41,8 +41,8 @@ const AddListing = () => {
             position: user.position,
         },
         coordinates: { //Location Selecter //Done// markerPosition
-            latitude: 0,
-            longitude: 0,
+            latitude: null,
+            longitude: null,
         },
     });
 
@@ -99,21 +99,28 @@ const AddListing = () => {
         };
     };
 
-    const [listings, setListings] = useState([]);
     const addListing = async () => {
         const newListing = {
             location: apartment.location,
             name: apartment.name,
-            photo_url: apartment.photo_url,
             price: apartment.price,
             type: apartment.type,
             bathroom: apartment.bathroom,
             bedroom: apartment.bedroom,
             images: apartment.images,
-            distances: apartment.distances,
             description: apartment.description,
             person: apartment.person,
             coordinates: apartment.coordinates,
+        };
+
+        const emptyFields = Object.entries(newListing).some(
+            ([key, value]) => 
+                value === null || value === "" || (Array.isArray(value) && value.length === 0)                
+        );
+
+        if (emptyFields){
+            alert("All fields must be filled out.");
+            return;
         };
 
         try {
@@ -123,12 +130,11 @@ const AddListing = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(newListing)    ,
-            });
-
+                });
             const result = await response.json();
-
             if(response.ok){
                 alert("Property added succesfully");
+                navigate("/Home");
             } else {
                 throw new Error(result.error);
             }
