@@ -148,5 +148,46 @@
       "latitude": 33.8793878,
       "longitude": 35.543721
     }
+  },
+  {
+    "location": "Rabieh",
+    "name": "Tessttttt",
+    "price": "1000",
+    "type": "Cottage",
+    "bathroom": "1",
+    "bedroom": "1",
+    "images": {
+      "imageUrls": [
+        "http://localhost:5000/uploads/images-1733068957744-403201775.jpg",
+        "http://localhost:5000/uploads/images-1733068957749-877754586.jpg",
+        "http://localhost:5000/uploads/images-1733068957753-159660659.jpg",
+        "http://localhost:5000/uploads/images-1733068957761-479801261.jpg",
+        "http://localhost:5000/uploads/images-1733068957775-216864633.jpg",
+        "http://localhost:5000/uploads/images-1733068957780-404348393.jpg",
+        "http://localhost:5000/uploads/images-1733068957786-833047810.jpg",
+        "http://localhost:5000/uploads/images-1733068957790-479734872.jpg",
+        "http://localhost:5000/uploads/images-1733068957793-171293559.jpg",
+        "http://localhost:5000/uploads/images-1733068957798-811273291.jpg",
+        "http://localhost:5000/uploads/images-1733068957802-346752851.jpg",
+        "http://localhost:5000/uploads/images-1733068957805-87250531.jpg",
+        "http://localhost:5000/uploads/images-1733068957809-167453574.jpg",
+        "http://localhost:5000/uploads/images-1733068957818-214882022.png",
+        "http://localhost:5000/uploads/images-1733068957868-586774772.jpg",
+        "http://localhost:5000/uploads/images-1733068957874-230388356.jpg",
+        "http://localhost:5000/uploads/images-1733068957882-967017097.jpg"
+      ]
+    },
+    "distances": {},
+    "description": "testtttttt",
+    "person": {
+      "name": "Raphael Mady",
+      "phonenumber": "71519185",
+      "email": "raphael.mady16@gmail.com",
+      "position": "Owner"
+    },
+    "coordinates": {
+      "latitude": 33.91653350000001,
+      "longitude": 35.6077849
+    }
   }
 ]
