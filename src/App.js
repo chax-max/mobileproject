@@ -9,6 +9,7 @@ import About from './screens/About';
 import AddListing from "./screens/AddListing";
 import { LocationProvider } from "./functions/LocationContext";
 import { User } from "./functions/UserContext";
+import { GoogleMapsProvider } from "./functions/GoogleMapsContext";
 import Contact from "./screens/Contact";
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
 
   return (
     <User>
+    <GoogleMapsProvider>
     <LocationProvider>
     <Router>
       <Routes>
@@ -65,6 +67,7 @@ const App = () => {
       </Routes>
     </Router>
     </LocationProvider>
+    </GoogleMapsProvider>
     </User>
   );
 };

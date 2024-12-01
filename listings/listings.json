@@ -1,0 +1,152 @@
+[
+  {
+    "location": "Jabal Lubnan",
+    "name": "Test",
+    "price": "1",
+    "type": "Cottage",
+    "bathroom": "1",
+    "bedroom": "1",
+    "images": {
+      "imageUrls": [
+        "http://localhost:5000/uploads/images-1733017667164-529778442.jpg",
+        "http://localhost:5000/uploads/images-1733017667166-62415463.jpg",
+        "http://localhost:5000/uploads/images-1733017667168-486451978.jpg",
+        "http://localhost:5000/uploads/images-1733017667171-275683547.jpg",
+        "http://localhost:5000/uploads/images-1733017667175-778956650.jpg",
+        "http://localhost:5000/uploads/images-1733017667177-849002999.jpg",
+        "http://localhost:5000/uploads/images-1733017667180-884909509.jpg",
+        "http://localhost:5000/uploads/images-1733017667182-570181449.jpg",
+        "http://localhost:5000/uploads/images-1733017667183-620396963.jpg",
+        "http://localhost:5000/uploads/images-1733017667185-95719110.jpg",
+        "http://localhost:5000/uploads/images-1733017667186-636517661.jpg",
+        "http://localhost:5000/uploads/images-1733017667187-32340729.jpg",
+        "http://localhost:5000/uploads/images-1733017667188-868434841.jpg",
+        "http://localhost:5000/uploads/images-1733017667191-46788200.png",
+        "http://localhost:5000/uploads/images-1733017667203-514138262.jpg",
+        "http://localhost:5000/uploads/images-1733017667205-698873666.jpg",
+        "http://localhost:5000/uploads/images-1733017667206-852774134.jpg"
+      ]
+    },
+    "distances": {},
+    "description": "Test",
+    "person": {
+      "name": "",
+      "image_url": "",
+      "phonenumber": 0,
+      "email": "",
+      "position": ""
+    },
+    "coordinates": {
+      "latitude": 33.8793878,
+      "longitude": 35.543721
+    }
+  },
+  {
+    "location": "Jabal Lubnan",
+    "name": "Test 1",
+    "price": "1",
+    "type": "Cottage",
+    "bathroom": "1",
+    "bedroom": "1",
+    "images": {
+      "imageUrls": [
+        "http://localhost:5000/uploads/images-1733017708982-369832541.jpg",
+        "http://localhost:5000/uploads/images-1733017708983-419071548.jpg",
+        "http://localhost:5000/uploads/images-1733017708985-450478110.jpg",
+        "http://localhost:5000/uploads/images-1733017708987-664233648.jpg"
+      ]
+    },
+    "distances": {},
+    "description": "Test 1",
+    "person": {
+      "name": "",
+      "image_url": "",
+      "phonenumber": 0,
+      "email": "",
+      "position": ""
+    },
+    "coordinates": {
+      "latitude": 33.8793878,
+      "longitude": 35.543721
+    }
+  },
+  {
+    "location": "Hadath",
+    "name": "Test with user",
+    "price": "1000",
+    "type": "Cottage",
+    "bathroom": "1",
+    "bedroom": "1",
+    "images": {
+      "imageUrls": [
+        "http://localhost:5000/uploads/images-1733049577921-653708470.jpg",
+        "http://localhost:5000/uploads/images-1733049577926-703900937.jpg",
+        "http://localhost:5000/uploads/images-1733049577928-464351821.jpg",
+        "http://localhost:5000/uploads/images-1733049577936-532943879.jpg",
+        "http://localhost:5000/uploads/images-1733049577950-915787468.jpg",
+        "http://localhost:5000/uploads/images-1733049577954-315650248.jpg",
+        "http://localhost:5000/uploads/images-1733049577959-999974402.jpg",
+        "http://localhost:5000/uploads/images-1733049577964-60815171.jpg",
+        "http://localhost:5000/uploads/images-1733049577968-400423120.jpg",
+        "http://localhost:5000/uploads/images-1733049577972-966579511.jpg",
+        "http://localhost:5000/uploads/images-1733049577976-762912431.jpg",
+        "http://localhost:5000/uploads/images-1733049577979-306890068.jpg",
+        "http://localhost:5000/uploads/images-1733049577982-372431734.jpg",
+        "http://localhost:5000/uploads/images-1733049577990-563706458.png",
+        "http://localhost:5000/uploads/images-1733049578038-253377743.jpg",
+        "http://localhost:5000/uploads/images-1733049578044-808623567.jpg",
+        "http://localhost:5000/uploads/images-1733049578050-142112454.jpg"
+      ]
+    },
+    "distances": {},
+    "description": "Test with user",
+    "person": {
+      "name": "",
+      "image_url": "",
+      "phonenumber": 0,
+      "email": "",
+      "position": ""
+    },
+    "coordinates": {
+      "latitude": 33.8504679,
+      "longitude": 35.52787259999999
+    }
+  },
+  {
+    "location": "Jabal Lubnan",
+    "name": "test with user 2",
+    "price": "1",
+    "type": "Cottage",
+    "bathroom": "1",
+    "bedroom": "1",
+    "images": {
+      "imageUrls": [
+        "http://localhost:5000/uploads/images-1733050234781-83462014.jpg",
+        "http://localhost:5000/uploads/images-1733050234787-407750827.jpg",
+        "http://localhost:5000/uploads/images-1733050234790-958368961.jpg",
+        "http://localhost:5000/uploads/images-1733050234794-95112863.jpg",
+        "http://localhost:5000/uploads/images-1733050234799-323900551.jpg",
+        "http://localhost:5000/uploads/images-1733050234801-892471156.jpg",
+        "http://localhost:5000/uploads/images-1733050234804-355378023.jpg",
+        "http://localhost:5000/uploads/images-1733050234806-656714927.jpg",
+        "http://localhost:5000/uploads/images-1733050234807-130118469.jpg",
+        "http://localhost:5000/uploads/images-1733050234808-186508376.jpg",
+        "http://localhost:5000/uploads/images-1733050234809-420208025.jpg",
+        "http://localhost:5000/uploads/images-1733050234811-464254403.jpg",
+        "http://localhost:5000/uploads/images-1733050234813-654963700.jpg"
+      ]
+    },
+    "distances": {},
+    "description": "test",
+    "person": {
+      "name": "Raphael Mady",
+      "phonenumber": "71519185",
+      "email": "raphael.mady16@gmail.com",
+      "position": "Owner"
+    },
+    "coordinates": {
+      "latitude": 33.8793878,
+      "longitude": 35.543721
+    }
+  }
+]

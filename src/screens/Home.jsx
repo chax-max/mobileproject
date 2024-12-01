@@ -11,7 +11,7 @@ import imageMapping from "./imageMappings";
 const Home = () => {
   const navigate = useNavigate();
 
-  const handleSearchListingPress = () => navigate("/search-listing");
+  const handleSearchListingPress = () => navigate("/SearchListing");
   
 
   // Select specific house images for the slideshow

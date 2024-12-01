@@ -1,17 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import propertiesData from "../info.json";
-import imageMapping from "./imageMappings";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useLocationContext } from "../functions/LocationContext";
-
-
 
 const SearchListing = () => {
     const { latitude, longitude, locationName } = useLocationContext();
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [searchText, setSearchText] = useState("");
+    const [listings, setListings] = useState([]);
     const navigate = useNavigate();
 
     //Function to get the location between the user's current location and each property :
@@ -39,9 +36,26 @@ const SearchListing = () => {
     };
     //End function to get the location between the user's current location and each property
 
-    
+    //Function to fetch the listings from the server
+    useEffect(() => {
+        const fetchListings = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/getListings');
+                if(!response.ok){
+                    throw new Error("Failed to fetch listings");
+                };
+                const data = await response.json();
+                setListings(data);
+            } catch (error) {
+                console.error('Error fetching listings : ' +error);
+            };
+        };
+        fetchListings();
+    }, []);
+    //End function to fetch the listings from the server
+
     const getFilteredProperties = () => {
-        return propertiesData.filter(property => {
+        return listings.filter(property => {
             const matchesCategory = selectedCategory ? property.type.toLowerCase() === selectedCategory.toLowerCase() : true;
             const matchesSearchText = property.name.toLowerCase().includes(searchText.toLowerCase().trim()) || property.location.toLowerCase().includes(searchText.toLowerCase().trim());
             return matchesCategory && matchesSearchText;
@@ -49,7 +63,7 @@ const SearchListing = () => {
     };
 
     const filterPropertiesByDistance = () => {
-        return propertiesData.sort((a,b) => {
+        return listings.sort((a,b) => {
             const distanceA = harvesine(latitude, longitude, a.coordinates.latitude, a.coordinates.longitude);
             const distanceB = harvesine(latitude, longitude, b.coordinates.latitude, b.coordinates.longitude);
             return distanceA - distanceB;
@@ -101,7 +115,7 @@ const SearchListing = () => {
                                 height: "200px",
                                 objectFit: "cover",
                             }}
-                            src={imageMapping[property.photo_url]}
+                            src={property.images.imageUrls[0]}
                             alt={property.name}
                         />
                         <div style={{ padding: "15px", textAlign: "center" }}>
@@ -147,11 +161,11 @@ const SearchListing = () => {
             state: {
                 location: property.coordinates,
                 propertyName: property.name,
-                propertyImage: property.photo_url,
+                propertyImage: property.images.imageUrls[0],
                 price: property.price,
                 bathrooms: property.bathroom,
                 bedrooms: property.bedroom,
-                images: property.images,
+                images: property.images.imageUrls,
                 description: property.description,
                 ownerName: property.person.name,
                 ownerImage: property.person.image_url,
@@ -267,7 +281,7 @@ const SearchListing = () => {
                                 height: "250px",
                                 objectFit: "cover",
                             }}
-                            src={imageMapping[bestProperty.photo_url]}
+                            src={bestProperty.images.imageUrls[0]}
                             alt={bestProperty.name}
                         />
                         <div style={{ padding: "15px", textAlign: "center" }}>
@@ -292,7 +306,7 @@ const SearchListing = () => {
                                 fontWeight: "bold",
                                 color: "#0A8ED9",
                             }}>
-                                ${bestProperty.price}
+                                ${bestProperty.price} Per month
                             </p>
                             <p style={{
                                 margin: "5px 0",

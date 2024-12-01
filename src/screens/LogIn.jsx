@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import imageMapping from "./imageMappings";
+import { useUser } from '../functions/UserContext';
 
 const LogIn = () => {
   const navigate = useNavigate();
 
+  const { login } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessages, setErrorMessages] = useState({
@@ -46,6 +48,16 @@ const LogIn = () => {
     if (!user) {
       setErrorMessages({ email: "No account found with that email." });
       return;
+    } else if (user){
+        navigate("/Home");
+        login({
+          name: user.name,
+          phoneNo: user.phoneNo,
+          email: user.email,
+          position: user.position,
+          avatar: user.avatar
+        });
+        console.log(user);
     }
 
     // Check if the password is correct
@@ -53,6 +65,7 @@ const LogIn = () => {
       setErrorMessages({ password: "Incorrect password." });
       return;
     }
+
 
     alert("Login successful!");
 

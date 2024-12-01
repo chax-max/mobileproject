@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import imageMapping from "./imageMappings";
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, Marker } from '@react-google-maps/api';
 import Modal from "react-modal";
+import { useGoogleMaps } from "../functions/GoogleMapsContext";
 
-const googleApiKey = process.env.REACT_APP_GOOGLE_API;
 
 const DetailProductNew = () => {
   const navigate = useNavigate();
@@ -23,6 +23,7 @@ const DetailProductNew = () => {
     phonenumber,
     email,
   } = location.state || {};
+  const { scriptLoaded } = useGoogleMaps();
 
   const defaultLocation = { lat: 0, lng: 0};
   const mapCenter = propertyLocation.latitude && propertyLocation.longitude ?  {lat: propertyLocation.latitude, lng :propertyLocation.longitude } : defaultLocation;
@@ -44,31 +45,24 @@ const DetailProductNew = () => {
   const handlePhonePress = () => window.open(`tel:${phonenumber}`, "_self");
   const handleEmailPress = () => window.open(`mailto:${email}`, "_self");
 
-  const renderImage = (src, alt) => {
-    return src ? (
+  const renderImage = (imagesArray) => {
+    return imagesArray.map((src, index) => (
       <img
-        src={imageMapping[src]}
-        alt={alt}
+        key={index}
+        src={src}
+        alt="Alt"
         style={{ width: "100%", borderRadius: "10px", objectFit: "cover", height: "400px" }}
       />
-    ) : (
-      <img
-        src="https://via.placeholder.com/400" // Placeholder image if no image available
-        alt={alt}
-        style={{ width: "100%", borderRadius: "10px", objectFit: "cover", height: "400px" }}
-      />
-    );
-  };
+    ))
+  }
 
   const RenderModal = () => {
     return(
       <Modal isOpen={modalVisible} onRequestClose={() => setModalVisible(false)}>
         <div style={styles.modalContainer}>
-            {images.map((image, index) => (
-              <div key={index}>
-                {renderImage(image, index)}
+              <div>
+                {renderImage(images)}
               </div>
-            ))}
           <div style={styles.closeModalButtonContainer}>
             <button style={styles.closeModalButton} onClick={() => setModalVisible(false)}>✖ Close</button>
           </div>
@@ -77,11 +71,14 @@ const DetailProductNew = () => {
     )
   }
 
+  if(!scriptLoaded) {
+    return <div>Loading...</div>
+  }
   return(
     <div style={{ padding: "20px", maxWidth: "1200px", margin: "auto", fontFamily: "'Roboto', sans-serif" }}>
       {/* Render Property Main Image */}
       <div style={{ position: "relative", borderRadius: "10px", boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)" }}>
-        {renderImage(propertyImage, propertyName)}
+        {renderImage(images)[0]}
 
         <div style={{ position: "absolute", top: "20px", left: "20px", display: "flex", gap: "15px" }}>
           <button onClick={handlePressHome} style={styles.iconButton}>
@@ -179,7 +176,7 @@ const DetailProductNew = () => {
             images.slice(0, 3).map((image, index) => (
               <img
                 key={index}
-                src={imageMapping[image] || "https://via.placeholder.com/100"} // Fallback for gallery image
+                src={images[index] || "https://via.placeholder.com/100"} // Fallback for gallery image
                 alt={`Gallery img ${index + 1}`}
                 style={styles.galleryImage}
               />
@@ -198,7 +195,6 @@ const DetailProductNew = () => {
 
       {/* Render Map */}
       <div style={{ marginTop: "40px", borderRadius: "10px", overflow: "hidden", boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)" }}>
-        <LoadScript googleMapsApiKey={googleApiKey} libraries={["marker"]}>
           <GoogleMap
             mapContainerStyle={styles.mapStyle}
             center={mapCenter}
@@ -206,7 +202,6 @@ const DetailProductNew = () => {
           >
             <Marker position={mapCenter} />
           </GoogleMap>
-        </LoadScript>
       </div>
 
       {/* Price and Rent Button */}

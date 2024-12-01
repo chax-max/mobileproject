@@ -1,17 +1,20 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useLocationContext } from "../functions/LocationContext";
 import { useNavigate } from "react-router-dom";
 import GooglePlacesAutocomplete from 'react-google-autocomplete';
-import { LoadScript, GoogleMap, Marker } from "@react-google-maps/api";
+import { GoogleMap, Marker } from "@react-google-maps/api";
+import { useGoogleMaps } from "../functions/GoogleMapsContext";
 import Navbar from "./Navbar";
+import { useUser } from "../functions/UserContext";
 
 
 const googleApiKey = process.env.REACT_APP_GOOGLE_API;
-const libraries = ['places'];
 
 const AddListing = () => {
     const navigate = useNavigate();
-    const { latitude, longitude, locationName } = useLocationContext();
+    const { user } = useUser();
+    const { latitude, longitude } = useLocationContext();
+    const { scriptLoaded } = useGoogleMaps();
 
     const descriptionRef = useRef(null);
     const priceRef = useRef(null);
@@ -25,33 +28,36 @@ const AddListing = () => {
         photo_url: "", //Input Fields //Done// Image Selector
         price: "", //Input Fields Done
         type: "", //Input Fields //Done// TypeSelection
-        bathroom: 0, //Input Fields Done
-        bedroom: 0, //Input Fields Done
+        bathroom: "", //Input Fields Done
+        bedroom: "", //Input Fields Done
         images: [], //Input Fields //Done// Image Selector
         distances: {},
         description: "", //Input Fields Done
         person: {
-            name: "",
-            image_url: "",
-            phonenumber: 0,
-            email: "",
-            position: "",
+            name: user.name,
+            image_url: user.avatar,
+            phonenumber: user.phoneNo,
+            email: user.email,
+            position: user.position,
         },
         coordinates: { //Location Selecter //Done// markerPosition
-            latitude: null,
-            longitude: null,
+            latitude: 0,
+            longitude: 0,
         },
     });
 
     const [markerPosition, setMarkerPosition] = useState({lat: latitude, lng: longitude});
     const [region, setRegion] = useState({lat: latitude, lng: longitude,});
 
-    const handlePlaceSelected = (place) => {
+    const handlePlaceSelected = async (place) => {
         if(place.geometry){
             const { lat, lng } = place.geometry.location;
             const newLocation = { lat: lat(), lng: lng()};
+            await getLocationName(newLocation.lat, newLocation.lng);
             setRegion(newLocation);
             setMarkerPosition(newLocation);
+            updateNestedField("coordinates","latitude", newLocation.lat);
+            updateNestedField("coordinates","longitude", newLocation.lng);
         };
     };
 
@@ -67,12 +73,6 @@ const AddListing = () => {
                 [childKey]: value,
             },
         }));
-    };
-
-    const savePosition = () => {
-        updateField("location", locationName);
-        updateNestedField("coordinates", "longitude", markerPosition.longitude);
-        updateNestedField("coordinates", "latitude", markerPosition.latitude);
     };
 
     const getLocationName = async (lat, lon) => {
@@ -99,8 +99,8 @@ const AddListing = () => {
         };
     };
 
-    const lisitings = JSON.parse(localStorage.getItem("listings")) || [];
-    const addListing = () => {
+    const [listings, setListings] = useState([]);
+    const addListing = async () => {
         const newListing = {
             location: apartment.location,
             name: apartment.name,
@@ -115,61 +115,59 @@ const AddListing = () => {
             person: apartment.person,
             coordinates: apartment.coordinates,
         };
-        lisitings.push(newListing);
-        localStorage.setItem("listings", JSON.stringify(lisitings));
-        alert("Property added succesfully");
-        navigate("/Home");
+
+        try {
+            const response = await fetch('http://localhost:5000/addListing', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newListing)    ,
+            });
+
+            const result = await response.json();
+
+            if(response.ok){
+                alert("Property added succesfully");
+            } else {
+                throw new Error(result.error);
+            }
+        } catch (addListingError) {
+            console.log("Error adding listing:", addListingError);
+            alert("An error occurred while adding your listing.");
+        }
     };
 
     const uploadImages = async (event) => {
         try {
-            const files = event.target.files;
-            const images = [];
-      
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-      
-                // Use FileReader to read the image as a data URL
-                const reader = new FileReader();
-      
-                reader.onload = () => {
-                    images.push(reader.result);
-      
-                    // When all images are read, update the state
-                    if (images.length === files.length) {
-                    updateField("photo_url", images[0]); // First image as main photo
-                    updateField("images", images); // Array of all images
-                    }
-                };
-      
-                reader.readAsDataURL(file); // Convert image to base64 URL
+            const files = Array.from(event.target.files);
+            const formData = new FormData();
+                files.forEach((file) => {
+            formData.append('images',file);
+            });
+
+            const response = await fetch('http://localhost:5000/uploadImages', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if(!response.ok){
+                throw new Error('Failed to upload images');
             }
+
+            const imagesUrls = await response.json();
+            updateField("images", imagesUrls);
+            updateField("photo_url", imagesUrls[0]);
+
+            console.log(imagesUrls);
         } catch (error) {
             console.log("Error uploading images:", error);
         }
     };
 
-    const LocationSelector = (useCallback(() => {
-        return (
-            <LoadScript googleMapsApiKey={googleApiKey} libraries={libraries}>
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <GooglePlacesAutocomplete
-                        apiKey={googleApiKey}
-                        onPlaceSelected={handlePlaceSelected}
-                        style={{ width: '300px', padding: '10px', marginBottom: '20px' }}
-                    />
-
-                    <GoogleMap
-                        mapContainerStyle={{ width: '100%', height: '400px', maxWidth: '800px' }}
-                        center={region}
-                        zoom={12}
-                    >
-                        {markerPosition && <Marker position={markerPosition} />}
-                    </GoogleMap>
-                </div>
-            </LoadScript>
-        );
-    }, [markerPosition, region]))
+    if(!scriptLoaded){
+        return <div>Loading...</div>
+    };
 
     return (
         <div style={styles.mainContainer}>
@@ -246,7 +244,7 @@ const AddListing = () => {
                         ref={typeRef}
                         style={styles.typeSelector}
                         value={apartment.type}
-                        onSelect={(type) => updateField("type", type.target.value)}
+                        onChange={(type) => updateField("type", type.target.value)}
                     >
                         <option label="Property Type" value="" />
                         <option label="Cottage" value="Cottage" />
@@ -265,7 +263,21 @@ const AddListing = () => {
                     />
 
                     {/*Location*/}
-                    <LocationSelector />
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <GooglePlacesAutocomplete
+                            apiKey={googleApiKey}
+                            onPlaceSelected={handlePlaceSelected}
+                            style={{ width: '300px', padding: '10px', marginBottom: '20px' }}
+                        />
+
+                        <GoogleMap
+                            mapContainerStyle={{ width: '100%', height: '400px', maxWidth: '800px' }}
+                            center={region}
+                            zoom={12}
+                        >
+                            {markerPosition && <Marker position={markerPosition} />}
+                        </GoogleMap>
+                    </div>
 
                     {/*Save button*/}
                     <div style={styles.savePropertyContainer}>
