@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import "swiper/css/autoplay";
 
 import imageMapping from "./imageMappings";
 
@@ -16,9 +17,9 @@ const Home = () => {
 
   // Select specific house images for the slideshow
   const houseImages = [
-    imageMapping["../assets/images/hall.jpg"],
-    imageMapping["../assets/images/bathroom-1.jpg"],
-    imageMapping["../assets/images/bathroom-2.jpg"],
+    imageMapping["../assets/images/outdoor.jpg"],
+    imageMapping["../assets/images/outdoor-1.jpg"],
+    imageMapping["../assets/images/outdoor-3.jpg" ],
   ];
 
   return (
@@ -51,8 +52,10 @@ const Home = () => {
       <div style={styles.slideshowContainer}>
         <Swiper
           loop={true}
-          autoplay={{ delay: 3000 }}
-     
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+          }}
           spaceBetween={10}
         >
           {houseImages.map((image, index) => (
@@ -158,11 +161,12 @@ const styles = {
     borderRadius: "15px",
     overflow: "hidden",
     maxWidth: "90%",
+    height:'450px',
   },
   slideshowImage: {
     width: "100%",
     borderRadius: "10px",
-    height: "250px",
+    height: "450px",
     objectFit: "cover",
   },
   servicesContainer: {

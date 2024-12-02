@@ -189,5 +189,212 @@
       "latitude": 33.91653350000001,
       "longitude": 35.6077849
     }
+  },
+  {
+    "location": "Baabda",
+    "name": "Baabda Hotel",
+    "price": "270",
+    "type": "Hotel",
+    "bathroom": "2",
+    "bedroom": "2",
+    "images": {
+      "imageUrls": [
+        "http://localhost:5000/uploads/images-1733170727372-339889533.jpeg",
+        "http://localhost:5000/uploads/images-1733170727373-977765022.jpeg"
+      ]
+    },
+    "description": "Hotel Near Antonines University",
+    "person": {
+      "name": "charbel hourani",
+      "phonenumber": "78959357",
+      "email": "charbelhourani100@gmail.com"
+    },
+    "coordinates": {
+      "latitude": 33.8339902,
+      "longitude": 35.5437069
+    }
+  },
+  {
+    "location": "Baabda",
+    "name": "Baabda Villa",
+    "price": "400",
+    "type": "Villa",
+    "bathroom": "4",
+    "bedroom": "4",
+    "images": {
+      "imageUrls": [
+        "http://localhost:5000/uploads/images-1733171046764-559228797.jpeg",
+        "http://localhost:5000/uploads/images-1733171046764-228883119.jpeg",
+        "http://localhost:5000/uploads/images-1733171046765-161443664.jpeg",
+        "http://localhost:5000/uploads/images-1733171046765-127910280.jpeg"
+      ]
+    },
+    "description": "Best Villa in Baabda comes with a very good price. Contact for more info.",
+    "person": {
+      "name": "charbel hourani",
+      "phonenumber": "78959357",
+      "email": "charbelhourani100@gmail.com"
+    },
+    "coordinates": {
+      "latitude": 33.8339902,
+      "longitude": 35.5437069
+    }
+  },
+  {
+    "location": "Hadath",
+    "name": "Hadath Villa",
+    "price": "500",
+    "type": "Villa",
+    "bathroom": "4",
+    "bedroom": "5",
+    "images": {
+      "imageUrls": [
+        "http://localhost:5000/uploads/images-1733171550671-723078333.webp",
+        "http://localhost:5000/uploads/images-1733171550672-458792081.jpeg",
+        "http://localhost:5000/uploads/images-1733171550678-505246198.jpg",
+        "http://localhost:5000/uploads/images-1733171550678-429064346.webp"
+      ]
+    },
+    "description": "Best Villa in hadath , dive in the photos for reassurance.",
+    "person": {
+      "name": "charbel hourani",
+      "phonenumber": "78959357",
+      "email": "charbelhourani100@gmail.com"
+    },
+    "coordinates": {
+      "latitude": 33.8504679,
+      "longitude": 35.52787259999999
+    }
+  },
+  {
+    "location": "Hadath",
+    "name": "HadaVilla",
+    "price": "460",
+    "type": "Villa",
+    "bathroom": "3",
+    "bedroom": "4",
+    "images": {
+      "imageUrls": [
+        "http://localhost:5000/uploads/images-1733171663090-965168608.jpg",
+        "http://localhost:5000/uploads/images-1733171663090-834891475.jpg",
+        "http://localhost:5000/uploads/images-1733171663091-106566218.jpeg",
+        "http://localhost:5000/uploads/images-1733171663094-803859235.jpg"
+      ]
+    },
+    "description": "Luxurious Villa Located in the heart of Hadath.",
+    "person": {
+      "name": "charbel hourani",
+      "phonenumber": "78959357",
+      "email": "charbelhourani100@gmail.com"
+    },
+    "coordinates": {
+      "latitude": 33.8504679,
+      "longitude": 35.52787259999999
+    }
+  },
+  {
+    "location": "Yarzeh",
+    "name": "Yarze Villa",
+    "price": "600",
+    "type": "Villa",
+    "bathroom": "5",
+    "bedroom": "6",
+    "images": {
+      "imageUrls": [
+        "http://localhost:5000/uploads/images-1733171827495-973953985.webp",
+        "http://localhost:5000/uploads/images-1733171827496-721145099.jpg",
+        "http://localhost:5000/uploads/images-1733171827498-432316564.jpg",
+        "http://localhost:5000/uploads/images-1733171827498-880752947.jpg",
+        "http://localhost:5000/uploads/images-1733171827504-704777984.jpg"
+      ]
+    },
+    "description": "Best villa for rent in Yarze near yarze club",
+    "person": {
+      "name": "charbel hourani",
+      "phonenumber": "78959357",
+      "email": "charbelhourani100@gmail.com"
+    },
+    "coordinates": {
+      "latitude": 33.83168099999999,
+      "longitude": 35.5551005
+    }
+  },
+  {
+    "location": "Aley",
+    "name": "Hotel Aley",
+    "price": "240",
+    "type": "Hotel",
+    "bathroom": "2",
+    "bedroom": "3",
+    "images": {
+      "imageUrls": [
+        "http://localhost:5000/uploads/images-1733172175147-354478009.jpg",
+        "http://localhost:5000/uploads/images-1733172175147-238218644.jpeg",
+        "http://localhost:5000/uploads/images-1733172175154-707975605.jpeg",
+        "http://localhost:5000/uploads/images-1733172175160-552814366.jpg"
+      ]
+    },
+    "description": "Best View from Our Hotel in Aley .Book Now!!",
+    "person": {
+      "name": "charbel hourani",
+      "phonenumber": "78959357",
+      "email": "charbelhourani100@gmail.com"
+    },
+    "coordinates": {
+      "latitude": 33.8069031,
+      "longitude": 35.6024366
+    }
+  },
+  {
+    "location": "Aaraiya",
+    "name": "Aaraiya Hotel",
+    "price": "220",
+    "type": "Hotel",
+    "bathroom": "3",
+    "bedroom": "3",
+    "images": {
+      "imageUrls": [
+        "http://localhost:5000/uploads/images-1733172376723-891972168.jpg",
+        "http://localhost:5000/uploads/images-1733172376723-786375478.jpg",
+        "http://localhost:5000/uploads/images-1733172376726-450938746.jpg",
+        "http://localhost:5000/uploads/images-1733172376728-958306230.jpg"
+      ]
+    },
+    "description": "One of the rarest hotel you will ever see. Call Us!!",
+    "person": {
+      "name": "charbel hourani",
+      "phonenumber": "78959357",
+      "email": "charbelhourani100@gmail.com"
+    },
+    "coordinates": {
+      "latitude": 33.82922499999999,
+      "longitude": 35.5924292
+    }
+  },
+  {
+    "location": "Baabda",
+    "name": "Baabda Appartment",
+    "price": "480",
+    "type": "Apartment",
+    "bathroom": "2",
+    "bedroom": "2",
+    "images": {
+      "imageUrls": [
+        "http://localhost:5000/uploads/images-1733172698277-474495649.jpg",
+        "http://localhost:5000/uploads/images-1733172698278-735202454.jpg",
+        "http://localhost:5000/uploads/images-1733172698279-784821874.jpg",
+        "http://localhost:5000/uploads/images-1733172698280-928003383.jpg"
+      ]
+    },
+    "description": "Book this luxurious appartment for one night , Time in : 2pm , Time out : 12 PM.",
+    "person": {
+      "name": "charbel hourani",
+      "phonenumber": "78959357",
+      "email": "charbelhourani100@gmail.com"
+    },
+    "coordinates": {
+      "latitude": 33.8339902,
+      "longitude": 35.5437069
+    }
   }
 ]
