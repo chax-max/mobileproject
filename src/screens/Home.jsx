@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaHandsHelping, FaSearch, FaHome} from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -16,11 +16,25 @@ const Home = () => {
   
 
   // Select specific house images for the slideshow
-  const houseImages = [
-    imageMapping["../assets/images/outdoor.jpg"],
-    imageMapping["../assets/images/outdoor-1.jpg"],
-    imageMapping["../assets/images/outdoor-3.jpg" ],
-  ];
+  const [houseImages, setHouseImages] = useState([]);
+  
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/getImages');
+        if(!response.ok){
+          throw new Error('Failed to fetch images.');
+        };
+        const data = await response.json();
+        setHouseImages(data.images);
+      } catch (fetchingImagesError) {
+        console.error('Error fetching images : ' + fetchingImagesError);
+      };
+    };
+
+    fetchImages();
+    console.log(houseImages);
+  }, []);
 
   return (
     <div style={{ backgroundColor: "#f9f9f9", fontFamily: "Arial, sans-serif" }}>

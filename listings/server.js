@@ -82,6 +82,19 @@ const getListings = (req, res) => {
     });
 };
 
+//Function to fetch the images 
+const getImages = (req, res) => {
+    fs.readdir(uploadsDir, (err, files) => {
+        if(err){
+            return res.status(500).json({error : 'Error reading uploads directory.'})
+        };
+
+        const imagesUrls = files.map(file => `${req.protocol}://${req.get('host')}/uploads/${file}`);
+
+        res.status(200).json({images: imagesUrls});
+    });
+};
+
 // Endpoint to handle image uploads
 app.post('/uploadImages', upload.array('images', 20), handleImageUploads);
 
@@ -90,6 +103,9 @@ app.post('/addListing', addListing);
 
 //Endpoint to handle fetching the listings
 app.get('/getListings', getListings);
+
+//Endpoint to handle fetching the images
+app.get('/getImages', getImages);
 
 // Serve images from the "uploads" directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
